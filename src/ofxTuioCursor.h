@@ -30,10 +30,12 @@ class ofxTuioCursor : public ofxTuioContainer{
 	
 public:
 	
-	ofxTuioCursor(long _sid, int _fid, float _xpos, float _ypos) : ofxTuioContainer( _sid,  _xpos,  _ypos){
+	ofxTuioCursor(long _sid, int _fid, float _xpos, float _ypos, float _width,float _height) : ofxTuioContainer( _sid,  _xpos,  _ypos, _width, _height){
 		fingerId = _fid;
 		xpos = _xpos;
 		ypos = _ypos;
+		width = _width;
+		height = _height;
 	};
 	
 	ofxTuioCursor(ofxTuioCursor * _tuioCursor) : ofxTuioContainer(_tuioCursor){

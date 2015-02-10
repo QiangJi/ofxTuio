@@ -136,6 +136,8 @@ public:
 					float xspeed =  m.getArgAsFloat(4);
 					float yspeed =  m.getArgAsFloat(5);
 					float maccel =  m.getArgAsFloat(6);
+					float width = m.getArgAsFloat(7);
+					float height = m.getArgAsFloat(8);
 
 					list<ofxTuioCursor*>::iterator tit;
 					for (tit=cursorList.begin(); tit != cursorList.end(); tit++)
@@ -157,13 +159,20 @@ public:
 							delete curToDelete;
 						} else maxFingerID = fid;
 
-						ofxTuioCursor *addCursor = new ofxTuioCursor(sid,fid,xpos,ypos);
+						ofxTuioCursor *addCursor = new ofxTuioCursor(sid,fid,xpos,ypos,width,height);
 						cursorList.push_back(addCursor);
 
 						ofNotifyEvent(cursorAdded, *(cursorList.back()), this);
 
-					} else if ( ((*tit)->getX()!=xpos) || ((*tit)->getY()!=ypos) || ((*tit)->getXSpeed()!=xspeed) || ((*tit)->getYSpeed()!=yspeed) || ((*tit)->getMotionAccel()!=maccel) ) {
-						(*tit)->update(xpos,ypos,xspeed,yspeed,maccel);
+					} else if ( ((*tit)->getX()!=xpos) || 
+						((*tit)->getY()!=ypos) || 
+						((*tit)->getXSpeed()!=xspeed) || 
+						((*tit)->getYSpeed()!=yspeed) || 
+						((*tit)->getMotionAccel()!=maccel) ||
+						((*tit)->getWidth()!=width) ||
+						((*tit)->getHeight()!=height)){
+
+						(*tit)->update(xpos,ypos,xspeed,yspeed,maccel,width,height);
 
 						ofNotifyEvent(cursorUpdated, **tit, this);
 					}
@@ -232,9 +241,8 @@ public:
 		list<ofxTuioCursor*>::iterator tit;
 		for (tit=cursorList.begin(); tit != cursorList.end(); tit++) {
 			ofxTuioCursor *blob = (*tit);
-
 			glColor3f(1.0,1.0,1.0);
-			ofEllipse(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), 10.0, 10.0);
+			ofEllipse(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), blob->getWidth() * ofGetWidth(), blob->getHeight() * ofGetHeight());
 			string str = "SessionId: "+ofToString((int)(blob->getSessionId()));
 			ofDrawBitmapString(str, blob->getX()*ofGetWidth()-10.0, blob->getY()*ofGetHeight()+25.0);
 		}

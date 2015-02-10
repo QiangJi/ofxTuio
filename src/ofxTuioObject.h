@@ -30,7 +30,7 @@ class ofxTuioObject : public ofxTuioContainer{
 	
 public:
 	
-	ofxTuioObject(long _sid, int _fid, float _xpos, float _ypos, float _angle) : ofxTuioContainer( _sid,  _xpos,  _ypos){
+	ofxTuioObject(long _sid, int _fid, float _xpos, float _ypos, float _angle) : ofxTuioContainer( _sid,  _xpos,  _ypos,0,0){
         fiducialId = _fid;
 	    angle = _angle;
 		rotation_speed = 0.0f;
@@ -52,7 +52,7 @@ public:
 	~ofxTuioObject(){};
 	
 	void update (float _xpos, float _ypos, float _angle, float _xspeed, float _yspeed, float _rspeed, float _maccel, float _raccel) {
-		ofxTuioContainer::update(_xpos,_ypos,_xspeed,_yspeed,_maccel);
+		ofxTuioContainer::update(_xpos,_ypos,_xspeed,_yspeed,_maccel,0,0);
 		angle = _angle;
 		rotation_speed = _rspeed;
 		rotation_accel = _raccel;

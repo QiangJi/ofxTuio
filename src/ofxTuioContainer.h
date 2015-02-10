@@ -30,7 +30,7 @@ class ofxTuioContainer : public ofxTuioPoint{
 	
 public:
 	
-	ofxTuioContainer(long _sid, float _xpos, float _ypos) : ofxTuioPoint(xpos,  ypos){
+	ofxTuioContainer(long _sid, float _xpos, float _ypos,float _width,float _height) : ofxTuioPoint(xpos,  ypos){
 		sessionId = _sid;
 		xspeed = 0.0f;
 		yspeed = 0.0f;
@@ -38,6 +38,8 @@ public:
 		motion_accel = 0.0f;
 		xpos = _xpos;
 		ypos = _ypos;
+		width = _width;
+		height = _height;
 	};
 	
 	ofxTuioContainer(ofxTuioContainer * _tuioContainer) : ofxTuioPoint(_tuioContainer){
@@ -48,16 +50,20 @@ public:
 		motion_accel = _tuioContainer->getMotionAccel();
 		xpos = _tuioContainer->getX();
 		ypos = _tuioContainer->getY();
+		width = _tuioContainer->getWidth();
+		height = _tuioContainer->getHeight();
 	};
 	
 	virtual ~ofxTuioContainer(){};
 	
-	virtual void update (float _xpos, float _ypos, float _xspeed, float _yspeed, float _maccel) {
+	virtual void update (float _xpos, float _ypos, float _xspeed, float _yspeed, float _maccel,float _width,float _height) {
 		ofxTuioPoint::update(_xpos, _ypos);
 		xspeed = _xspeed;
 		yspeed = _yspeed;
 		motion_speed = (float)sqrt(_xspeed*_xspeed+_yspeed*_yspeed);
 		motion_accel = _maccel;
+		width = _width;
+		height = _height;
 	};
 	
 	virtual void update (ofxTuioContainer * _tuioContainer) {
@@ -66,6 +72,8 @@ public:
 		yspeed = _tuioContainer->getYSpeed();
 		motion_speed = _tuioContainer->getMotionSpeed();
 		motion_accel = _tuioContainer->getMotionAccel();
+		width = _tuioContainer->getWidth();
+		height = _tuioContainer->getHeight();
 	};
 	
 	virtual long getSessionId() { 
@@ -92,11 +100,20 @@ public:
 	virtual float getMotionAccel(){
 		return motion_accel;
 	};
+
+	virtual float getWidth(){
+		return width;
+	};
 	
+	virtual float getHeight(){
+		return height;
+	};
+
 protected:
 	long sessionId;
     float xspeed, yspeed;
 	float motion_speed, motion_accel;
+	float width,height;
 };
 
 #endif	
